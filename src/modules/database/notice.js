@@ -6,7 +6,11 @@ module.exports = {
 
 async function get_notice(length){
     try {
-        const returnedValue = await notice.find({}).limit(length).sort("-publishDate");
+        if(length) {
+            const returnedValueLength = await notice.find({}).limit(length).sort("-publishDate");
+            return ["success",returnedValueLength];
+        }
+        const returnedValue = await notice.find({}).sort("-publishDate");
         return ["success",returnedValue];
     } catch (error) {
         if(error) return ["error",error];

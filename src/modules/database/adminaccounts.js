@@ -18,7 +18,7 @@ async function signin({email,password}){
 async function signup({email,password,fullname}){
     try {
         const adminaccounts = new Adminaccounts({email,password,fullname});
-        adminaccounts.password = adminaccounts.encryptPassword(password);
+        adminaccounts.password = await adminaccounts.encryptPassword(password);
         await adminaccounts.save();
         return ["success",adminaccounts._id];
     } catch (error) {

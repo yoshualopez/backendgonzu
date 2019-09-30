@@ -18,7 +18,7 @@ async function signin({email,password}){
 async function signup({email,password,fullname}){
     try {
         const padres = new Padres({email,password,fullname});
-        padres.password = padres.encryptPassword(password);
+        padres.password = await padres.encryptPassword(password);
         await padres.save();
         return ["success",padres._id];
     } catch (error) {

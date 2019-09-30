@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const sessions = new Schema({
-    token : { 
+    token : {
         type : String,
         userId : String, 
     },

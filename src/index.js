@@ -7,10 +7,10 @@ const router = require("./modules/http");
 const app = express();
 require("./modules/database/connect");
 
+app.use(express.static(path.join( __dirname, "public")));
 app.use(express.json());
 app.use(bodyparser.urlencoded({ extended : false }));
 app.use("/",router);
-app.use(express.static(path.join( __dirname, "public")));
 
 const server = app.listen(process.env.PORT || 3000, () => {
     console.log("UP")

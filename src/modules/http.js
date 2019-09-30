@@ -58,23 +58,29 @@ const data = {
 };
 
 app.route("/loggin/flia").post(httpRoute.fatherSignIn);
+app.route("/loggin/teachers").post(httpRoute.adminSignIn);
 app.route("/register/flia").post(httpRoute.fatherSignUp);
-app.route("/notices").get(db.notice.getAll);
-app.route("/notices/add").post(tokens.checkValidation,(req,res) => {
+app.route("/register/teachers").post(httpRoute.adminSignUp);
+
+app.route("/notices").get(httpRoute.getAllNotices,(req,res)=>{ return res.status(200).json({response : "Any notice."})});
+app.route("/notices/:id").get(httpRoute.getAllNotices,(req,res)=>{ return res.status(200).json({response : "Any notice."})});
+
+app.route("/notices/add").post(tokens.checkValidation,async (req,res) => {
     const autor = req.body.autor;
     const title = req.body.title;
     const redact = req.body.redact;
     const bsImage = req.body.bsImage;
     const publishDate = req.body.published;
-    const images = req.body.images;
-    const isFinished = db.notice.add({autor,title,redact,bsImage,publishDate,images});
+    const images = req.body.images || [];
+    const isFinished = await db.notice.add({autor,title,redact,bsImage,publishDate,images});
     if(isFinished[0] === "success"){
-        return res.status(200).json({error : true,message : isFinished[1]});
+        return res.status(200).json({error : false,message : isFinished[1]});
     }
     return res.status(200).json({error : true, message : isFinished[1]})
 })
+app.route('/logout').post(tokens.checkValidation,(req, res) => { return res.status(200).json({ auth: false, token: null })});
+
 app.route("/api/geting").get((req,res) =>{
-    console.log(req.ip);
     res.json(data).status(200);
 });
 
