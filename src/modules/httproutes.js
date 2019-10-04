@@ -10,17 +10,18 @@ module.exports = {
 };
 async function getAllNotices(req,res,next){
     var countNotices = req.body.length || req.params.id;
+    const new_token_id = res.locals.newtoken ? res.locals.newtoken : [];
     if(countNotices != undefined){
         countNotices = new Number(countNotices);
         const noticesLength = await db.notice.getAll(countNotices);
         if(noticesLength[0] === "success"){
-            return res.status(200).json({response : noticesLength[1]});
+            return res.status(200).json({response : noticesLength[1],newtoken : new_token_id});
         }
         return next();
     }
     const notices = await db.notice.getAll(10);
     if(notices[0] === "success"){
-        return res.status(200).json({response : notices[1]});
+        return res.status(200).json({response : notices[1],newtoken : new_token_id});
     }
     return next();
 }
