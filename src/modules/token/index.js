@@ -1,8 +1,8 @@
-const checkValidation = require("./checkvalidation");
+const check = require("./checkvalidation");
 const newToken = require("./newtoken");
 const upgradesession = require("./upgradesession");
 module.exports = {
-    checkValidation,
+    check,
     newToken,
     upgradesession,
 }

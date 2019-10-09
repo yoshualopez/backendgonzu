@@ -1,8 +1,8 @@
 const padres = require("./padres");
 const notice = require("./notice");
-const admin = require("./adminaccounts");
+const user = require("./user");
 module.exports = {
     padres,
     notice,
-    admin,
+    user,
 };

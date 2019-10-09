@@ -17,12 +17,30 @@ async function signin({email,password}){
 }
 async function signup({email,password,fullname}){
     try {
-        const padres = new Padres({email,password,fullname});
-        padres.password = await padres.encryptPassword(password);
-        await padres.save();
-        return ["success",padres._id];
+        const alreadyEmail = await Padres.findOne({ email });
+        const alreadyFullname = await Padres.findOne({ fullname });
+        if(alreadyEmail != null){
+            throw "alreadyEmail";
+        }
+        if(alreadyFullname != null){
+            throw "alreadyFullname";
+        }
+        try {
+            const padres = new Padres({email,password,fullname});
+            padres.password = await padres.encryptPassword(password);
+            await padres.save();
+            return ["success",padres._id];
+        } catch (error) {
+            return ["error","There was a problem registering your user"]
+        }
     } catch (error) {
-        return ["error","There was a problem registering your user"]
+        if(error === "alreadyEmail"){
+            return ["error","Email already exist"];
+        }
+        if(error === "alreadyFullname"){
+            return ["error","Person already exist"];
+        }
+        return ["error","There was a problem validity register"];
     }
 }
 async function remove({id}){
