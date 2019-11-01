@@ -2,18 +2,25 @@ require("dotenv").config();
 const express = require("express");
 const bodyparser = require("body-parser");
 const path = require("path");
-const socket = require("socket.io");
-const router = require("./modules/http");
 const app = express();
-require("./modules/database/connect");
+const cors = require("cors");
+const socketio = require("socket.io");
+require("./database/connect");
 
-app.use(express.static(path.join( __dirname, "public")));
+app.use(cors());
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
-app.use(bodyparser.urlencoded({ extended : false }));
-app.use("/",router);
+require("./server")(app);
+app.use("/phothos", express.static(path.join(__dirname, "phothos")));
+app.use("/docs", express.static(path.join(__dirname, "docs")));
 
-const server = app.listen(process.env.PORT || 3000, () => {
-    console.log("UP")
+app.set("PORT", process.env.PORT || 3000);
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({ extended: false }));
+
+const server = app.listen(app.get("PORT"), () => {
+    console.log("Server UP");
 });
-const io = socket.listen(server);
-require("./modules/websockets")(io);
+const io = socketio.listen(server);
+require("./websockets")(io);
+module.exports = server;

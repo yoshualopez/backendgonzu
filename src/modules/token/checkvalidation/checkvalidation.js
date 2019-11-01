@@ -10,6 +10,8 @@ async function verifiToken(req, res, next){
         const remained = (decoded.exp * 1000) - Date.now()
         const minutes = Math.round((remained / 1000) / 60);
         res.locals.neednewtoken = false;
+        // <=
+        console.log(token);
         if(minutes <= 120){
             res.locals.neednewtoken = true;
             res.locals.tokenid = decoded.id;

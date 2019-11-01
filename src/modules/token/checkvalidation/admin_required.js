@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
-const admin = require("../../database/models/user");
+//const admin = require("../../../database/models/user");
 module.exports = async function needAreAdmin(req,res,next){
-    try {
+    /**
+     * try {
         const token = req.headers['x-access-token'];
         if(!token){
             return res.status(401).send({ auth: false, message: 'No token provided' });
@@ -30,4 +31,5 @@ module.exports = async function needAreAdmin(req,res,next){
         console.log(error);
         return res.status(401).send({ auth: false, message: 'Token Error' });
     }
+     */
 }
