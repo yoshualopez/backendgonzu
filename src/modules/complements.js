@@ -10,5 +10,6 @@ module.exports = {
   log : utils.keyword,
   uniqueID : utils.key,
   crendential : utils.credential,
-  newToken : token.newToken
+  newToken : token.newToken,
+  validToken : token.check.valid
 };

@@ -4,7 +4,8 @@ const PUT = require("./notice.put");
 const POST = require("./notice.post");
 module.exports = {
   DELETE,
-  GET,
+  GET : GET.noticeGET,
+  GETById : GET.noticeGETByID,
   POST,
   PUT
 };

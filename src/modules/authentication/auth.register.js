@@ -37,7 +37,7 @@ async function registerUser(req, res) {
       error: registerResponse.message
     });
   }
-  const token = iNeed.newToken(registerResponse.id);
+  const token = res.locals.token || res.locals.newtoken;
   registerResponse.token = token;
   return res.status(200).json({
     auth: true,

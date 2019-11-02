@@ -16,6 +16,7 @@ const english = {
   dbProblemRegisterUser : "There was a problem when registering a user, try again",
   dbProblemRemoveUser : "There was a problem when remove user, try again",
   dbRemoveUser : "User removed successfully",
+  dbUserNotFound : "User not Found!",
   dbProblemRegisterNotice : "There was a problem when registering an news, try again"
 };
 const spanish = {
@@ -36,6 +37,7 @@ const spanish = {
   dbProblemRegisterUser : "Hubo un problema al registar usuario, inténtalo denuevo",
   dbProblemRemoveUser : "Hubo un problema al remover usuario, inténtalo denuevo",
   dbRemoveUser : "Usuario removido satisfactoriamente",
+  dbUserNotFound : "Usuario no encontrado!",
   dbProblemRegisterNotice : "Hubo un problema al registrar noticia inténtalo denuevo"
 };
 

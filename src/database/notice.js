@@ -1,12 +1,29 @@
 const notice = require("./models/notices");
+const user = require("./user");
 const utils = require("../utils");
 module.exports = {
-  model : notice,
+  model: notice,
   add: new_notice,
-  getAll: get_notice
+  getAll,
+  notice: get_notice
 };
 
-async function get_notice(length) {
+async function get_notice(id) {
+  try {
+    const response = { hasError: false, message: "" };
+    const noticeItem = await notice.findById({_id : id});
+    response.hasError = false;
+    response.message = noticeItem;
+    return response;
+  } catch (error) {
+    const response = { hasError: false, message: "" };
+    response.hasError = true;
+    response.message = utils.keyword.english.unspectedError;
+    return response;
+  }
+}
+
+async function getAll(length) {
   try {
     const response = { hasError: false, message: "" };
     if (length) {
@@ -19,6 +36,7 @@ async function get_notice(length) {
       return response;
     }
     const noticesLis = await notice.find({}).sort("-publishDate");
+    
     response.hasError = false;
     response.message = noticesLis;
     return response;

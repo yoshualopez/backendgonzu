@@ -8,7 +8,7 @@ async function noticePOST(req, res) {
   const bsImage = req.body.bsImage;
   const publishDate = req.body.published;
   const images = req.body.images || [];
-  const isFinished = await iNeed.databaseNotices.add({
+  const notice = await iNeed.databaseNotices.add({
     autor,
     title,
     redact,
@@ -16,14 +16,18 @@ async function noticePOST(req, res) {
     publishDate,
     images
   });
-  if (isFinished[0] === "success") {
-    return res
-      .status(200)
-      .json({ error: false, message: isFinished[1], newtoken: new_token_id });
+  if (notice.hasError) {
+    return res.status(200).json({ 
+      error: notice.message,
+      auth : false, 
+      response: "", 
+      token: new_token_id });
   }
-  return res
-    .status(200)
-    .json({ error: true, message: isFinished[1], newtoken: new_token_id });
+  return res.status(200).json({ 
+    error: "", 
+    auth : true,
+    response: notice.message, 
+    token: new_token_id });
 }
 
 module.exports = noticePOST;
