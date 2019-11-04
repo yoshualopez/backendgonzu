@@ -8,8 +8,24 @@ module.exports = {
   signup,
   addChildren,
   signupcomplete,
-  removeById
+  removeById,
+  getUserById
 };
+
+async function getUserById(id) {
+  try {
+    const response = { hasError: false, data: {} };
+    const user = await User.findById({ _id: id });
+    response.hasError = false;
+    response.data = user;
+    return response;
+  } catch (error) {
+    const response = { hasError: false, data: {} };
+    response.hasError = true;
+    response.data = utils.keyword.english.dbUserNotFound;
+    return response;
+  }
+}
 
 async function signin(email, password) {
   try {
@@ -105,12 +121,7 @@ async function signup(email, password, fullname, accountType, gender) {
     return response;
   }
 }
-async function signupcomplete(
-  id,
-  teacherAssignature,
-  teacherTutor,
-  permissions
-) {
+async function signupcomplete(id, teacherAssignature, teacherTutor, permissions) {
   try {
     const response = {
       teacherAssignature: "",
@@ -167,11 +178,7 @@ async function addChildren(parentId, childrensArray) {
       return childrensId.push(childrenModel._id);
     });
     const user = await User.findById({ _id: parentId });
-    await User.findOneAndUpdate(
-      { _id: user._id },
-      { childrens: childrensId },
-      { new: true }
-    );
+    await User.findOneAndUpdate({ _id: user._id }, { childrens: childrensId }, { new: true });
     console.log(user._id, " => ", childrensId);
     response.hasError = false;
     response.childrensArray = childrensArray;

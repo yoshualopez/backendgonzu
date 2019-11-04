@@ -1,34 +1,31 @@
 const iNeed = require("../complements");
 
 async function noticeGET(req, res) {
-  var countNotices = req.body.countNotices || req.params.id;
-  const new_token_id = res.locals.newtoken ? res.locals.newtoken : [];
+  var countNotices = req.body.countNotices || req.params.count;
+  const new_token_id = res.locals.newtoken ? res.locals.newtoken : "";
   if (countNotices != undefined) {
     countNotices = new Number(countNotices);
     const noticesListLength = await iNeed.databaseNotices.getAll(countNotices);
     if (!noticesListLength.hasError) {
       return res.status(200).json({
-        error: false,
-        auth: true,
-        response: noticesListLength.message,
-        token: new_token_id
+        error: noticesListLength.message,
+        auth: false,
+        response: {}
       });
     }
   }
   const noticesList = await iNeed.databaseNotices.getAll(10);
   if (!noticesList.hasError) {
     return res.status(200).json({
-      error: false,
+      error: "",
       auth: true,
-      response: noticesList.message,
-      token: new_token_id
+      response: noticesList.message
     });
   }
   return res.status(200).json({
-    error: false,
+    error: iNeed.log.english.noticeNothing,
     auth: true,
-    response: iNeed.log.english.noticeNothing,
-    token: new_token_id
+    response: {}
   });
 }
 
@@ -39,15 +36,13 @@ async function noticeGETByID(req, res) {
     return res.status(500).json({
       error: true,
       auth: true,
-      response: notice.message,
-      token: ""
+      response: notice.message
     });
   }
   return res.status(200).json({
     error: false,
     auth: true,
-    response: notice.message,
-    token: ""
+    response: notice.message
   });
 }
 module.exports = {
