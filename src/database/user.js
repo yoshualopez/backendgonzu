@@ -43,7 +43,6 @@ async function signin(email, password) {
       hasError: false,
       message: ""
     };
-    console.log();
     const user = await User.findOne({ email: email });
     if (!user) {
       response.hasError = true;

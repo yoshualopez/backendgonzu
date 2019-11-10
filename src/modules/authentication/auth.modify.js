@@ -27,13 +27,13 @@ async function user(req, res, next) {
       }
     });
   }
-  const accountType = req.body.body.accountType || "";
-  const email = req.body.body.email || "";
-  const fullname = req.body.body.fullname || "";
-  const gender = req.body.body.gender || "";
-  const permissions = req.body.body.permissions || [];
-  const teacherAssignature = req.body.body.teacherAssignature || "";
-  const teacherTutor = req.body.body.teacherTutor || "";
+  const accountType = req.body.accountType || "";
+  const email = req.body.email || "";
+  const fullname = req.body.fullname || "";
+  const gender = req.body.gender || "";
+  const permissions = req.body.permissions || [];
+  const teacherAssignature = req.body.teacherAssignature || "";
+  const teacherTutor = req.body.teacherTutor || "";
 
   if (method == "UPDATE") {
     const userToUpdate = await iNeed.databaseUser.model.findById({ _id: id });
