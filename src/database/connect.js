@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 var productiondatabase = "mongodb+srv://" + process.env.USERDATABASE + ":" + process.env.PASSWORDDATABASE + "@gonzudb-0iler.mongodb.net/test?retryWrites=true&w=majority";
 var localdatabase = process.env.LOCALDATABASE;
 mongoose
-  .connect(localdatabase, {
+  .connect(productiondatabase, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
