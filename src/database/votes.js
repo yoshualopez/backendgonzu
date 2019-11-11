@@ -10,18 +10,18 @@ module.exports = {
 
 async function vote(req, res) {
   try {
-    const { fullname, ci, age, course, listSelect } = req.body;
-    const ballot = { fullname: "", ci: 0, age: 0, course: "", listSelect: "" };
-    ballot.fullname = fullname;
+    const { FirstName,ci,lastName,listSelect,matricula } = req.body;
+    const ballot = { FirstName : "",lastName : "", ci: 0,enrollment : "",listSelect: "" };
     ballot.ci = ci;
-    ballot.age = age;
-    ballot.course = course;
-    ballot.listSelect = listSelect;
-
+    ballot.Firstname = FirstName;
+    ballot.lastName = lastName;
+    ballot.enrollment = matricula;
+    ballot.listSelect = listSelect.coverName;
+    
     const response = { hasError: false, data: {} };
     const _ballot = new Vote(ballot);
     const ballotSaved = await _ballot.save();
-    const list = await ListElection.findById(listSelect);
+    const list = await ListElection.findById(listSelect._id);
 
     if (list.status == "closed" || list.status == "open") {
       return res.status(200).json({ auth: false, error: "Campaign not listening", response: {} });

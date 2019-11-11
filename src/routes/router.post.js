@@ -1,4 +1,5 @@
 const notices = require("../modules/notices");
+const student = require("../database/student");
 const auth = require("../modules/authentication");
 const vote = require("../database/votes");
 const listElections = require("../database/listElections");
@@ -14,5 +15,6 @@ module.exports = app => {
   app.route("/register/:id/next").post(tokens.check.valid, tokens.upgradesession, auth.registerOne);
   app.route("/register/:id/childrens").post(tokens.check.valid, tokens.upgradesession, auth.addChildren);
   app.route("/defray").post(vote.vote);
+  app.route("/student/:filter").post(student.findByStudent);
   app.route("/createcampaign").post(listElections.postCampaign);
 };

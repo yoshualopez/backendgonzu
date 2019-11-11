@@ -11,6 +11,7 @@ const voteModel = new Schema(
         nickNameList: String,
         nickNameListMeaning: String,
         nickLogoUrl: String,
+        imageGroupUrl : String,
         integrants: [
           {
             fullname: String,
