@@ -19,7 +19,7 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: false }));
 
 const server = app.listen(app.get("PORT"), () => {
-    console.log("Server UP");
+    console.log("Server UP",process.env.NODE_ENV);
 });
 const io = socketio.listen(server);
 require("./websockets")(io);

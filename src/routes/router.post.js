@@ -1,16 +1,18 @@
 const notices = require("../modules/notices");
 const auth = require("../modules/authentication");
+const vote = require("../database/votes");
+const listElections = require("../database/listElections");
 const tokens = require("../modules/token");
 
-module.exports = (app) => {
+module.exports = app => {
   app.route("/loggin").post(auth.login);
-  app.route("/user/:id/:method").post(tokens.check.valid,tokens.upgradesession,auth.user);
-  app.route("/validate").post(tokens.check.valid,tokens.upgradesession,auth.validate);
-  app.route("/register").post(tokens.check.valid,tokens.upgradesession,auth.register);
-  //tokens.check.valid,tokens.upgradesession
-  app.route("/notices/add").post(notices.POST);
-  app.route("/logout/:id").post(tokens.check.valid,auth.logout);
-  //tokens.upgradesession,
-  app.route("/register/:id/next").post(auth.registerOne);
-  app.route("/register/:id/childrens").post(auth.addChildren);
+  app.route("/validate").post(tokens.check.valid, tokens.upgradesession, auth.validate);
+  app.route("/register").post(tokens.check.valid, tokens.upgradesession, auth.register);
+  app.route("/notices/add").post(tokens.check.valid, tokens.upgradesession, notices.POST);
+  app.route("/user/:id/:method").post(tokens.check.valid, tokens.upgradesession, auth.user);
+  app.route("/logout/:id").post(tokens.check.valid, auth.logout);
+  app.route("/register/:id/next").post(tokens.check.valid, tokens.upgradesession, auth.registerOne);
+  app.route("/register/:id/childrens").post(tokens.check.valid, tokens.upgradesession, auth.addChildren);
+  app.route("/defray").post(vote.vote);
+  app.route("/createcampaign").post(listElections.postCampaign);
 };
