@@ -1,12 +1,23 @@
 const { Schema, model } = require("mongoose");
-const bcrypt = require("bcryptjs");
 const studentModel = new Schema(
   {
-    ci: String,
-    lastName: String,
-    FirstName: String,
-    subscribe: String,
-    matricula: String,
+    identicard: String,
+    firstlastname: String,
+    secondlastname: String,
+    firstname: String,
+    secondname: String,
+    email: String,
+    sex: String,
+    country: String,
+    birthplace: String,
+    birthday: String,
+    parish: String,
+    address: String,
+    enrollmentcode: String,
+    courseSection: String,
+    course: String,
+    parallel: String,
+    retired: String
   },
   { collection: "students" }
 );

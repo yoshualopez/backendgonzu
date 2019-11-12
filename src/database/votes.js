@@ -1,4 +1,3 @@
-const User = require("./models/user");
 const Vote = require("./models/vote");
 const ListElection = require("./models/listElections");
 const utils = require("../utils");
@@ -10,21 +9,37 @@ module.exports = {
 
 async function vote(req, res) {
   try {
-    const { FirstName,ci,lastName,listSelect,matricula } = req.body;
-    const ballot = { FirstName : "",lastName : "", ci: 0,enrollment : "",listSelect: "" };
-    ballot.ci = ci;
-    ballot.Firstname = FirstName;
-    ballot.lastName = lastName;
-    ballot.enrollment = matricula;
+    const { campaign, user, listSelect } = req.body;
+    const ballot = {
+      identicard: "",
+      enrollmentcode: "",
+      courseSection: "",
+      course: "",
+      parallel: "",
+      listSelect: ""
+    };
+    ballot.identicard = user.identicard;
+    ballot.enrollmentcode = user.enrollmentcode;
+    ballot.courseSection = user.courseSection;
+    ballot.course = user.course;
+    ballot.parallel = user.parallel;
     ballot.listSelect = listSelect.coverName;
-    
-    const response = { hasError: false, data: {} };
-    const _ballot = new Vote(ballot);
-    const ballotSaved = await _ballot.save();
-    const list = await ListElection.findById(listSelect._id);
 
+    // const response = { hasError: false, data: {} };
+    const ballotStagin = new Vote(ballot);
+    const ballotSaved = await ballotStagin.save();
+    const list = await ListElection.findById(campaign._id);
+    if (!list) {
+      return res.status(200).json({
+        auth: false,
+        error: "Campaing not found",
+        response: {}
+      });
+    }
     if (list.status == "closed" || list.status == "open") {
-      return res.status(200).json({ auth: false, error: "Campaign not listening", response: {} });
+      return res
+        .status(200)
+        .json({ auth: false, error: "Campaign not listening", response: {} });
     }
 
     await list.updateOne({

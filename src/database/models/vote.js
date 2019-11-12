@@ -2,10 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const voteModel = new Schema(
   {
-    Firstname: String,
-    lastName : String,
-    ci: String,
-    enrollment : String,
+    identicard : String,
+    enrollmentcode : String,
+    courseSection : String,
+    course : String,
+    parallel : String,
     listSelect: String
   },
   { collection: "votes" }
