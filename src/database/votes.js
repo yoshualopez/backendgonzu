@@ -18,7 +18,7 @@ async function vote(req, res) {
       parallel: "",
       listSelect: ""
     };
-    ballot.identicard = user.identicard;
+    ballot.identicard = user.firstlastname + " " + user.secondlastname + " " + user.firstname + " " + user.secondname;
     ballot.enrollmentcode = user.enrollmentcode;
     ballot.courseSection = user.courseSection;
     ballot.course = user.course;
