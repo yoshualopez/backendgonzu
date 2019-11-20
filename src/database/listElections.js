@@ -35,6 +35,10 @@ async function postCampaign(req, res) {
   }
 }
 async function getCampaign(req, res) {
-  const campaign = await ListElection.find({});
+  let campaign = await ListElection.find({});
+  campaign = campaign.map(function(list) {
+    list.votes[0] = list.votes.length;
+    return list;
+  });
   res.status(200).json({ auth: true, error: "", response: campaign });
 }

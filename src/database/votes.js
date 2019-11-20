@@ -24,8 +24,7 @@ async function vote(req, res) {
     ballot.course = user.course;
     ballot.parallel = user.parallel;
     ballot.listSelect = listSelect.coverName;
-
-    // const response = { hasError: false, data: {} };
+    const response = { hasError: false, data: {} };
     const ballotStagin = new Vote(ballot);
     const ballotSaved = await ballotStagin.save();
     const list = await ListElection.findById(campaign._id);
